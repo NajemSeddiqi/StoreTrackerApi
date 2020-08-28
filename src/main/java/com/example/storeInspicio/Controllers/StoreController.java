@@ -38,7 +38,6 @@ public class StoreController {
                 .stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
-        var t = new String[2];
         return CollectionModel.of(stores,
                 linkTo(methodOn(StoreController.class).all()).withSelfRel());
     }
@@ -65,7 +64,7 @@ public class StoreController {
     ResponseEntity<?> updateStore(@RequestBody Store store, @PathVariable String id) {
         Store updatedStore = repository.findById(id)
                 .map(s -> {
-                    var props = store.getProperties();
+                    Properties props = store.getProperties();
                     s.setProperties(new Properties(props.getStore(),
                             props.getPicUrl(),
                             props.getAddress(),
