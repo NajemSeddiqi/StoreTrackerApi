@@ -38,7 +38,7 @@ public class StoreController {
                 .stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
-
+        var t = new String[2];
         return CollectionModel.of(stores,
                 linkTo(methodOn(StoreController.class).all()).withSelfRel());
     }
