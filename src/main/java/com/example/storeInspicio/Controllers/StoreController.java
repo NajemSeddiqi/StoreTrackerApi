@@ -20,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping(value = "/stores")
+@RequestMapping(value = "/api/stores")
 public class StoreController {
 
     private final StoreRepository repository;
@@ -43,7 +43,7 @@ public class StoreController {
                 linkTo(methodOn(StoreController.class).all()).withSelfRel());
     }
 
-    @PostMapping("/stores")
+    @PostMapping()
     ResponseEntity<?> newStore(@RequestBody Store newStore) {
         EntityModel<Store> entityModel = assembler.toModel(repository.save(newStore));
 
@@ -53,7 +53,7 @@ public class StoreController {
     }
 
     //Single item
-    @GetMapping("/stores/{id}")
+    @GetMapping("/{id}")
     public EntityModel<Store> one(@PathVariable String id) {
         Store store = repository.findById(id)
                 .orElseThrow(() -> new StoreNotFoundException(id));
@@ -61,7 +61,7 @@ public class StoreController {
         return assembler.toModel(store);
     }
 
-    @PutMapping("/stores/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<?> updateStore(@RequestBody Store store, @PathVariable String id) {
         Store updatedStore = repository.findById(id)
                 .map(s -> {
@@ -87,7 +87,7 @@ public class StoreController {
                 .body(entityModel);
     }
 
-    @DeleteMapping("/stores/{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<?> deleteStore(@PathVariable String id) {
         repository.deleteById(id);
 
