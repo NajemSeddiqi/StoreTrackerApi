@@ -20,6 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
+@RequestMapping(value = "/stores")
 public class StoreController {
 
     private final StoreRepository repository;
@@ -32,7 +33,7 @@ public class StoreController {
 
 
     //Aggregate root
-    @GetMapping("/stores")
+    @GetMapping()
     public CollectionModel<EntityModel<Store>> all() throws IOException {
         List<EntityModel<Store>> stores = repository.findAll()
                 .stream()
