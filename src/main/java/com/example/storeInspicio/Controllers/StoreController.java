@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -45,6 +46,10 @@ public class StoreController {
 
     @PostMapping()
     ResponseEntity<?> newStore(@RequestBody Store newStore) {
+        if (newStore.getProperties().getProvince().getId() == null) {
+            newStore.getProperties().getProvince().setId(UUID.randomUUID());
+        }
+
         EntityModel<Store> entityModel = assembler.toModel(repository.save(newStore));
 
         return ResponseEntity

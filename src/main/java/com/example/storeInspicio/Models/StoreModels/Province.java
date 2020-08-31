@@ -1,25 +1,27 @@
 package com.example.storeInspicio.Models.StoreModels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Province {
     @Id
-    private String id;
+    private UUID id;
     private String name;
 
-    public Province(String id, String name) {
+    public Province(@JsonProperty("id") UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public UUID getId() {
+        return id;
     }
 
-    public String getId() {
-        return id;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public void setName(String name) {
