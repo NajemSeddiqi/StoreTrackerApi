@@ -9,7 +9,8 @@ public class Province {
     private String id;
     private String name;
 
-    public Province(String name) {
+    public Province(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
