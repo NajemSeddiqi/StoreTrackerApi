@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@Configuration
 public class StoreInspicioApplication {
 
     public static void main(String[] args) {
@@ -20,7 +19,7 @@ public class StoreInspicioApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/stores").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/stores").allowedOrigins("http://localhost:3000");
             }
         };
     }
