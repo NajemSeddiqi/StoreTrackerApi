@@ -14,6 +14,10 @@ public class Province {
         this.name = name;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
