@@ -11,7 +11,7 @@ public class Province {
     private UUID id;
     private String name;
 
-    public Province(@JsonProperty("id") UUID id, String name) {
+    public Province(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
