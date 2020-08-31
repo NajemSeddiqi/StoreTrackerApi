@@ -4,23 +4,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Province {
     @Id
-    private UUID id;
+    private Long id;
     private String name;
 
-    public Province(UUID id, String name) {
+    public Province(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
