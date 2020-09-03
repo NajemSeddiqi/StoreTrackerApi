@@ -1,6 +1,5 @@
 package com.example.storeInspicio.Models.StoreModels;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;

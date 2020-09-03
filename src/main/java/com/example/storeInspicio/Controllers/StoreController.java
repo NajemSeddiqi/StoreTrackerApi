@@ -6,6 +6,7 @@ import com.example.storeInspicio.ModelAssemblers.StoreModelAssembler;
 import com.example.storeInspicio.Models.StoreModels.Properties;
 import com.example.storeInspicio.Models.StoreModels.Store;
 import com.example.storeInspicio.Repos.StoreRepository;
+import com.example.storeInspicio.Repos.SuggestionRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -24,11 +24,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(value = "/api/stores")
 public class StoreController {
 
-    private final StoreRepository repository;
+    private final StoreRepository storeRepo;
     private final StoreModelAssembler assembler;
 
-    public StoreController(StoreRepository repository, StoreModelAssembler assembler) {
-        this.repository = repository;
+    public StoreController(StoreRepository storeRepo, StoreModelAssembler assembler) {
+        this.storeRepo = storeRepo;
         this.assembler = assembler;
     }
 
@@ -36,7 +36,7 @@ public class StoreController {
     //Aggregate root
     @GetMapping()
     public CollectionModel<EntityModel<Store>> all() throws IOException {
-        List<EntityModel<Store>> stores = repository.findAll()
+        List<EntityModel<Store>> stores = storeRepo.findAll()
                 .stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class StoreController {
 
     @PostMapping()
     ResponseEntity<?> newStore(@RequestBody Store newStore) {
-        EntityModel<Store> entityModel = assembler.toModel(repository.save(newStore));
+        EntityModel<Store> entityModel = assembler.toModel(storeRepo.save(newStore));
 
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
@@ -56,7 +56,7 @@ public class StoreController {
     //Single item
     @GetMapping("/{id}")
     public EntityModel<Store> one(@PathVariable String id) {
-        Store store = repository.findById(id)
+        Store store = storeRepo.findById(id)
                 .orElseThrow(() -> new StoreNotFoundException(id));
 
         return assembler.toModel(store);
@@ -64,7 +64,7 @@ public class StoreController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateStore(@RequestBody Store store, @PathVariable String id) {
-        Store updatedStore = repository.findById(id)
+        Store updatedStore = storeRepo.findById(id)
                 .map(s -> {
                     Properties props = store.getProperties();
                     s.setProperties(new Properties(props.getStore(),
@@ -74,14 +74,14 @@ public class StoreController {
                             props.getWebsite(),
                             props.getCity(),
                             props.getProvince()));
-                    return repository.save(s);
+                    return storeRepo.save(s);
                 })
                 .orElseGet(() -> {
                     store.setId(id);
-                    return repository.save(store);
+                    return storeRepo.save(store);
                 });
 
-        EntityModel<Store> entityModel = assembler.toModel(repository.save(updatedStore));
+        EntityModel<Store> entityModel = assembler.toModel(storeRepo.save(updatedStore));
 
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
@@ -90,7 +90,7 @@ public class StoreController {
 
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteStore(@PathVariable String id) {
-        repository.deleteById(id);
+        storeRepo.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
