@@ -20,6 +20,7 @@ public class StoreInspicioApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/stores").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/suggestion").allowedOrigins("http://localhost:3000");
             }
         };
     }
