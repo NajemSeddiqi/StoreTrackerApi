@@ -19,8 +19,10 @@ public class StoreInspicioApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/stores").allowedOrigins("https://storetrackerdeluxe.herokuapp.com");
-                registry.addMapping("/api/suggestion").allowedOrigins("https://storetrackerdeluxe.herokuapp.com");
+                registry.addMapping("/api/stores").allowedOrigins("https://storetrackerdeluxe.herokuapp.com", "http" +
+                        "://localhost:3000", "https://storetracker-d81d8.web.app");
+                registry.addMapping("/api/suggestion").allowedOrigins("https://storetrackerdeluxe.herokuapp.com",
+                        "http://localhost:3000", "https://storetracker-d81d8.web.app");
             }
         };
     }

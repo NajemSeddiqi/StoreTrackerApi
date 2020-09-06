@@ -7,6 +7,7 @@ import com.example.storeInspicio.Models.StoreModels.Properties;
 import com.example.storeInspicio.Models.StoreModels.Store;
 import com.example.storeInspicio.Repos.StoreRepository;
 import com.example.storeInspicio.Repos.SuggestionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
